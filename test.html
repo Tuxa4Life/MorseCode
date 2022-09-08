@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <audio class="bep" src="assets/audio/bep.mp3"></audio>
+    <audio class="beep" src="assets/audio/beep.mp3"></audio>
+
+    <input class="input" placeholder="Enter text to play" type="text">
+    <button onclick="play()">Play</button>
+
+    <script>
+        let bep = document.querySelector('.bep')
+        let beep = document.querySelector('.beep')
+        let input = document.querySelector('.input')
+
+        let morseCode = string => {
+            const morse = new Map([
+                ['A', '.-'], ['B', '-...'], ['C', '-.-.'],
+                ['D', '-..'], ['E', '.'], ['F', '..-.'],
+                ['G', '--.  '], ['H', '....'], ['I', '..'],
+                ['J', '.---'], ['K', '-.-'], ['L', '.-..'],
+                ['M', '--'], ['N', '-.'], ['O', '---'],
+                ['P', '.--.'], ['Q', '--.-'], ['R', '.-.'],
+                ['S', '...'], ['T', '-'], ['U', '..-'],
+                ['V', '...-'], ['W', '.--'], ['X', '-..-'],
+                ['Y', '-.--'], ['Z', '--..'], ['1', '.----'],
+                ['2', '..---'], ['3', '...--'], ['4', '....-'],
+                ['5', '.....'], ['6', '-....'], ['7', '--...'],
+                ['8', '---..'], ['9', '----.'], ['0', '-----'],
+            ])
+
+            let morseArray = []
+
+            for (let i = 0; i < string.length; i++) {
+                morseArray[i] = morse.get(string[i].toUpperCase())
+            }
+
+            return morseArray.join(' ')
+        }
+
+        let blink = morse => {
+            const blinks = new Map ([
+                ['.', 1],
+                ['-', 2],
+                [' ', 0]
+            ])
+
+            let blinkVals = []
+
+            for (let i = 0; i < morse.length; i++) {
+                blinkVals.push(blinks.get(morse[i]))
+            }
+
+            return blinkVals
+        }
+
+        let inputVal = ''
+
+        const sleep = (time) => {
+            return new Promise((resolve) => setTimeout(resolve, time))
+        }
+        let play = async () => {
+            inputVal = input.value
+            let arr = blink(morseCode(inputVal))
+
+            console.log(arr)
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] == 0) {
+                    await sleep(300)
+                    console.log('0');
+                } else if (arr[i] == 1) {
+                    bep.play()
+                    console.log('1');
+                } else {
+                    beep.play()
+                    console.log('2');
+                }
+                await sleep(500)
+            }
+        }
+
+    </script>
+</body>
+</html>
