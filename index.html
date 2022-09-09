@@ -33,6 +33,7 @@
                 ['2', '..---'], ['3', '...--'], ['4', '....-'],
                 ['5', '.....'], ['6', '-....'], ['7', '--...'],
                 ['8', '---..'], ['9', '----.'], ['0', '-----'],
+                [' ', ' ']
             ])
 
             let morseArray = []
@@ -72,7 +73,7 @@
             console.log(arr)
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i] == 0) {
-                    await sleep(300)
+                    await sleep(200)
                     console.log('0');
                 } else if (arr[i] == 1) {
                     bep.play()
@@ -81,7 +82,7 @@
                     beep.play()
                     console.log('2');
                 }
-                await sleep(500)
+                await sleep(400)
             }
         }
 
